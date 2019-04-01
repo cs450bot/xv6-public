@@ -272,6 +272,12 @@ test-p3b:
 test-p3b-cont:
 	@tests/p3b/runtests -c
 
+test-p4a:
+	@tests/p4a/runtests 
+
+test-p4a-cont:
+	@tests/p4a/runtests -c
+
 
 handin: handin-check
 	@echo "Handing in with git (this may ask for your GitHub username/password)..."
