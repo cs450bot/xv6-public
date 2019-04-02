@@ -149,10 +149,12 @@ main(int argc, char *argv[])
   check(ppid > 2, "getpid() failed");
   lastpid = ppid;
 
+#if 0
   check(
     (uint)&argc < 3*PGSIZE,
     "Program uses too much memory, stack of main thread should be in first three pages"
   );
+#endif
 
   // With the given allocator, after this line, malloc() will (probably) not be
   // page aligned

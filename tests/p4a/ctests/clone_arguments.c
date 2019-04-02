@@ -29,6 +29,7 @@ func(void *arg1, void *arg2)
   check(*(int *)arg1 == 0xABCDABCD, "*arg1 is incorrect");
   check(*(int *)arg2 == 0xCDEFCDEF, "*arg2 is incorrect");
   check(((uint)&retval % PGSIZE) == 0xFE4, "Local variable is in wrong location");
+  printf(1, "Retval is %d\n", retval);
   check(retval == 0, "Return value of clone() in child is incorrect");
 
   // Change external state

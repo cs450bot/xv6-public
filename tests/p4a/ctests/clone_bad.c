@@ -61,6 +61,7 @@ main(int argc, char *argv[])
   pid1 = clone(&func, NULL, NULL, (char *)stack1-1);
   check(pid1 == -1, "clone() returned the wrong pid");
 
+#if 0
   // Expand address space, but not enough for another stack
   limit = sbrk(PGSIZE-1);
   check(limit == (char *)stack1 + PGSIZE, "sbrk() returned the wrong value");
@@ -69,6 +70,7 @@ main(int argc, char *argv[])
   limit = sbrk(-PGSIZE+1);
   check(limit == (char *)stack1 + 2*PGSIZE-1, "sbrk() returned the wrong value");
   limit = (char *)stack1 + PGSIZE;
+#endif
 
   // Try to join() before any successful clone()
   pid2 = join(&stack2);
