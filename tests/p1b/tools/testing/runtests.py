@@ -159,6 +159,8 @@ def main(build_test, all_tests):
       if result.is_failed() and not options._continue or quitnow:
          log.write("Skipped " + str(len(_list) - len(ran)) + " tests.\n")
          log.write("To keep testing after failing a test, use flag '-c' or '--continue'\n")
+         if tempdir is not None:
+            shutil.rmtree(tempdir)
          sys.exit(1)
          
 
