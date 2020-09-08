@@ -260,6 +260,9 @@ EXTRA=\
 test-p1b:
 	@tests/p1b/runtests
 
+test-p1b-cont:
+	@tests/p1b/runtests -c
+
 test-p2b:
 	@tests/p2b/runtests 
 
