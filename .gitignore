@@ -17,3 +17,4 @@ mkfs
 *.log
 .DS_Store
 *.pyc
+_*
