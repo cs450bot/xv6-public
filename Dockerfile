@@ -4,10 +4,23 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y \
+    bat \
     binutils \
+    cscope \
+    ctags \
+    curl \
+    emacs \
     gcc-multilib \
     gdb \
     git \
+    locate \
     make \
+    netcat \
+    perl \
+    python \
+    python3 \
+    python3-pip \
     qemu-system-x86 \
-    valgrind
+    silversearcher-ag \
+    valgrind \
+    vim
