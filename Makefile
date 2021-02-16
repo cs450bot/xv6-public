@@ -42,11 +42,6 @@ TOOLPREFIX := $(shell if i386-jos-elf-objdump -i 2>&1 | grep '^elf32-i386$$' >/d
 	then echo ''; \
 	else echo "***" 1>&2; \
 	echo "*** Error: Couldn't find an i386-*-elf version of GCC/binutils." 1>&2; \
-	echo "*** Is the directory with i386-jos-elf-gcc in your PATH?" 1>&2; \
-	echo "*** If your i386-*-elf toolchain is installed with a command" 1>&2; \
-	echo "*** prefix other than 'i386-jos-elf-', set your TOOLPREFIX" 1>&2; \
-	echo "*** environment variable to that prefix and run 'make' again." 1>&2; \
-	echo "*** To turn off this error, run 'gmake TOOLPREFIX= ...'." 1>&2; \
 	echo "***" 1>&2; exit 1; fi)
 endif
 
@@ -244,18 +239,31 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
 	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
 
-# CUT HERE
-# prepare dist for students
-# after running make dist, probably want to
-# rename it to rev0 or rev1 or so on and then
-# check in that version.
+test-mp1:
+	@tests/mp1/runtests
 
-EXTRA=\
-	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
-	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
-	printf.c umalloc.c\
-	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
-	.gdbinit.tmpl gdbutil\
+test-mp1-cont:
+	@tests/mp1/runtests -c
+
+test-mp2:
+	@tests/mp2/runtests 
+
+test-mp2-cont:
+	@tests/mp2/runtests -c
+
+test-mp3:
+	@tests/mp3/runtests 
+
+test-mp3-cont:
+	@tests/mp3/runtests -c
+
+test-mp4:
+	@tests/mp4/runtests 
+
+test-mp4-cont:
+	@tests/mp4/runtests -c
+
+
 
 test-p1b:
 	@tests/p1b/runtests
@@ -280,68 +288,3 @@ test-p4a:
 
 test-p4a-cont:
 	@tests/p4a/runtests -c
-
-
-handin: handin-check
-	@echo "Handing in with git (this may ask for your GitHub username/password)..."
-	@git push
-
-
-handin-check:
-	@if ! test -d .git; then \
-		echo No .git directory, is this a git repository?; \
-		false; \
-	fi
-	@if test "$$(git symbolic-ref HEAD)" != refs/heads/master; then \
-		git branch; \
-		read -p "You are not on the master branch.  Hand-in the current branch? [y/N] " r; \
-		test "$$r" = y; \
-	fi
-	@if ! test -e info.txt; then \
-		echo "You haven't created an info.txt file!"; \
-		echo "Please create one with your name, email, etc."; \
-		echo "then add and commit it to continue."; \
-		false; \
-	fi
-	@if ! git diff-files --quiet || ! git diff-index --quiet --cached HEAD; then \
-		git status -s; \
-		echo; \
-		echo "You have uncomitted changes.  Please commit or stash them."; \
-		false; \
-	fi
-	@if test -n "`git status -s`"; then \
-		git status -s; \
-		read -p "Untracked files will not be handed in.  Continue? [y/N] " r; \
-		test "$$r" = y; \
-	fi
-
-dist:
-	rm -rf dist
-	mkdir dist
-	for i in $(FILES); \
-	do \
-		grep -v PAGEBREAK $$i >dist/$$i; \
-	done
-	sed '/CUT HERE/,$$d' Makefile >dist/Makefile
-	echo >dist/runoff.spec
-	cp $(EXTRA) dist
-
-dist-test:
-	rm -rf dist
-	make dist
-	rm -rf dist-test
-	mkdir dist-test
-	cp dist/* dist-test
-	cd dist-test; $(MAKE) print
-	cd dist-test; $(MAKE) bochs || true
-	cd dist-test; $(MAKE) qemu
-
-# update this rule (change rev#) when it is time to
-# make a new revision.
-tar:
-	rm -rf /tmp/xv6
-	mkdir -p /tmp/xv6
-	cp dist/* dist/.gdbinit.tmpl /tmp/xv6
-	(cd /tmp; tar cf - xv6) | gzip >xv6-rev10.tar.gz  # the next one will be 10 (9/17)
-
-.PHONY: dist-test dist
