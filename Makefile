@@ -262,29 +262,3 @@ test-mp4:
 
 test-mp4-cont:
 	@tests/mp4/runtests -c
-
-
-
-test-p1b:
-	@tests/p1b/runtests
-
-test-p1b-cont:
-	@tests/p1b/runtests -c
-
-test-p2b:
-	@tests/p2b/runtests 
-
-test-p2b-cont:
-	@tests/p2b/runtests -c
-
-test-p3b:
-	@tests/p3b/runtests 
-
-test-p3b-cont:
-	@tests/p3b/runtests -c
-
-test-p4a:
-	@tests/p4a/runtests 
-
-test-p4a-cont:
-	@tests/p4a/runtests -c
