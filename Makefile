@@ -226,7 +226,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
 
 docker:
-	docker run -itv $(PWD):/mp -w /mp cs450/xv6 bash
+	docker run -itv $(PWD):/mp -w /mp --name cs450xv6 --rm michaelee/cs450 bash
 
 test-mp1:
 	@tests/mp1/runtests

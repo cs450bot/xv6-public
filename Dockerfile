@@ -2,6 +2,8 @@ FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+COPY .gdbinit.root /root/.gdbinit
+
 RUN apt-get update && \
     apt-get install -y \
     bat \
