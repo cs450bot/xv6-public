@@ -28,22 +28,8 @@ OBJS = \
 	vectors.o\
 	vm.o\
 
-# Cross-compiling (e.g., on Mac OS X)
-# TOOLPREFIX = i386-jos-elf
-
 # Using native tools (e.g., on X86 Linux)
-#TOOLPREFIX = 
-
-# Try to infer the correct TOOLPREFIX if not set
-ifndef TOOLPREFIX
-TOOLPREFIX := $(shell if i386-jos-elf-objdump -i 2>&1 | grep '^elf32-i386$$' >/dev/null 2>&1; \
-	then echo 'i386-jos-elf-'; \
-	elif objdump -i 2>&1 | grep 'elf32-i386' >/dev/null 2>&1; \
-	then echo ''; \
-	else echo "***" 1>&2; \
-	echo "*** Error: Couldn't find an i386-*-elf version of GCC/binutils." 1>&2; \
-	echo "***" 1>&2; exit 1; fi)
-endif
+TOOLPREFIX =  
 
 # If the makefile can't find QEMU, specify its path here
 # QEMU = qemu-system-i386
@@ -238,6 +224,9 @@ qemu-gdb: fs.img xv6.img .gdbinit
 qemu-nox-gdb: fs.img xv6.img .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
 	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
+
+docker:
+	docker run -itv $(PWD):/mp -w /mp cs450/xv6 bash
 
 test-mp1:
 	@tests/mp1/runtests
