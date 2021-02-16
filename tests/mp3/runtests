@@ -1,0 +1,4 @@
+#!/bin/bash
+base=$PWD/tests/mp3
+python $base/mp3.py --test-path $base $@ | tee mp3test.log
+exit $?
