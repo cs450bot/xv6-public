@@ -4,7 +4,7 @@
 $script = <<-SCRIPT
 export DEBIAN_FRONTEND=noninteractive
 apt-get update && \
-apt-get install -y binutils tmux
+apt-get install -y binutils build-essential tmux
 echo "set auto-load safe-path /" > /home/vagrant/.gdbinit
 echo "cd /vagrant" >> /home/vagrant/.bashrc
 SCRIPT
