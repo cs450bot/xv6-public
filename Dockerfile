@@ -24,5 +24,6 @@ RUN apt-get update && \
     python3-pip \
     qemu-system-x86 \
     silversearcher-ag \
+    tmux \
     valgrind \
     vim
